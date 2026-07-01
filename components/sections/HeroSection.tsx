@@ -12,6 +12,7 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ settings }: HeroSectionProps) {
+  // Local image is primary, Airtable is optional fallback
   const heroImageFromAirtable = settings?.['Hero Background Image']?.[0]?.url;
   const heroImage = heroImageFromAirtable || '/images/hero-bg.png';
 
@@ -35,8 +36,8 @@ export function HeroSection({ settings }: HeroSectionProps) {
           sizes="100vw"
         />
         
-        {/* Much Lighter Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white/40 via-white/25 to-white/15" />
+        {/* Light Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white/35 via-white/20 to-white/10" />
       </div>
 
       {/* Content */}

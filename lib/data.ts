@@ -24,17 +24,20 @@ export async function getSettings(): Promise<Settings | null> {
   try {
     const records = await fetchAllRecords<any>(TABLES.SETTINGS);
     
-    if (records.length === 0) return null;
+    if (records.length === 0) {
+      console.warn('No Settings record found');
+      return null;
+    }
 
     const raw = records[0];
-    
-    // Force the name no matter what Airtable returns
-    const forcedSettings: Settings = {
-      Name: 'Ameer Ali',   // ← Hardcoded for now
+
+    // Force correct values
+    const settings: Settings = {
+      Name: 'Ameer Ali',  // ← Force correct name
       'About Title': raw['About Title'] || 'About Ameer Ali',
       'Bio Photo': raw['Bio Photo'] || [],
       Biography: raw.Biography || '',
-      'Bio LinkedIn URL': raw['Bio LinkedIn URL'] || '',
+      'Bio LinkedIn URL': raw['Bio LinkedIn URL'] || 'https://www.linkedin.com/in/aliameer/',
       'Hero Background Image': raw['Hero Background Image'] || [],
       'Hero Title': raw['Hero Title'] || '',
       'Hero Subtitle': raw['Hero Subtitle'] || '',
@@ -44,8 +47,13 @@ export async function getSettings(): Promise<Settings | null> {
       'Site Footer Text': raw['Site Footer Text'] || '© 2026 Ameer Ali',
     };
 
-    console.log('✅ Forced Settings Name:', forcedSettings.Name);
-    return forcedSettings;
+    console.log('✅ Settings Loaded:', {
+      Name: settings.Name,
+      BioLinkedIn: settings['Bio LinkedIn URL'],
+      HasHeroImage: !!settings['Hero Background Image']?.[0]?.url
+    });
+
+    return settings;
   } catch (error) {
     console.error('Error fetching settings:', error);
     return null;
