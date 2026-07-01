@@ -1,11 +1,11 @@
 # AI Healthcare Portfolio Website
 
-A premium, professional portfolio website for an AI Healthcare expert built with Next.js 15+ App Router, TypeScript, and Tailwind CSS.
+portfolio website for Ameer Ali built with Next.js 15+ App Router, TypeScript, and Tailwind CSS.
 
 ## Features
 
-- Light theme with sophisticated, elegant design
-- Premium typography using Inter and Playfair Display fonts
+
+- Inter and Playfair Display fonts
 - Fully responsive and mobile-first
 - Subtle Framer Motion animations
 - Airtable CMS integration for all content
@@ -51,7 +51,7 @@ AIRTABLE_BASE_ID=your_airtable_base_id_here
 
 ### 3. Set Up Airtable
 
-Create an Airtable base with the following tables (exact field names required):
+ 
 
 #### Settings Table
 - Name (text)
