@@ -212,7 +212,7 @@ export function ContactPageClient({ settings }: ContactPageClientProps) {
                   variant="outline"
                   className="w-full border-healthcare-200 text-healthcare-700 hover:bg-healthcare-50 rounded-full"
                 >
-                  <a href="mailto:speaking@example.com">Book a Speaking Engagement</a>
+                  <a href="mailto:ameerproduct@gmail.com">Book a Speaking Engagement</a>
                 </Button>
               </div>
             </motion.div>

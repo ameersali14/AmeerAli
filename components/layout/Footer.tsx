@@ -79,10 +79,7 @@ export function Footer({ settings }: FooterProps) {
           <p>
             © {currentYear} {name}. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <Link href="/privacy" className="hover:text-neutral-700 transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-neutral-700 transition-colors">Terms</Link>
-          </div>
+        
         </div>
       </div>
     </footer>

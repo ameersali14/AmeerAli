@@ -47,12 +47,12 @@ export default async function AboutPage() {
     },
     {
       icon: Target,
-      title: '$30M+ Annual Revenue Impact*',
+      title: '$30M+ Annual Revenue Impact',
       description: 'Delivered data-driven algorithms and operational systems generating significant recurring financial value.',
     },
     {
       icon: Zap,
-      title: 'Millions in Cost Savings*',
+      title: 'Millions in Cost Savings',
       description: 'Reduced operational waste and eliminated unnecessary software and manual processes through AI and workflow redesign.',
     },
   ];
