@@ -13,7 +13,7 @@ export function Footer({ settings }: FooterProps) {
   return (
     <footer className="bg-white border-t border-neutral-200">
       <div className="container-custom py-16">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 gap-x-8">
           {/* Brand & Description */}
           <div className="md:col-span-5">
             <Link href="/" className="inline-block mb-6">
@@ -39,7 +39,7 @@ export function Footer({ settings }: FooterProps) {
                 </a>
               )}
               <a
-                href="mailto:contact@example.com"
+                href="mailto:ameerproduct@gmail.com"
                 className="p-3 rounded-2xl bg-neutral-100 hover:bg-neutral-200 transition-colors text-neutral-600"
               >
                 <Mail className="w-5 h-5" />
@@ -74,7 +74,7 @@ export function Footer({ settings }: FooterProps) {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-neutral-200 bg-neutral-50">
+      <div className="border-t border-neutral-100 bg-neutral-50">
         <div className="container-custom py-6 text-sm text-neutral-500 flex flex-col md:flex-row justify-between items-center gap-4">
           <p>
             © {currentYear} {name}. All rights reserved.

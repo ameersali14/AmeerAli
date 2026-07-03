@@ -38,61 +38,64 @@ export function FeaturedPortfolioSection({ portfolio }: FeaturedPortfolioSection
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredProjects.map((project, index) => (
-            <motion.article
-              key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex flex-col h-full"   // ← Important
-            >
-              <Link
-                href={`/portfolio/${generateSlug(project['Project Title'])}`}
-                className="group flex flex-col h-full"
+        {/* Horizontal Scroll on Mobile */}
+        <div className="relative">
+          <div className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8">
+            {featuredProjects.map((project, index) => (
+              <motion.article
+                key={project.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="flex-shrink-0 w-[85%] md:w-auto snap-start"
               >
-                <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-neutral-100 card-hover flex flex-col h-full">
-                  {/* Image - Fixed aspect ratio */}
-                  <div className="relative aspect-[16/10] overflow-hidden flex-shrink-0">
-                    {project.Images?.[0]?.url ? (
-                      <Image
-                        src={project.Images[0].url}
-                        alt={project['Project Title']}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-healthcare-100 to-healthcare-200" />
-                    )}
-                    {project.Category && (
-                      <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium bg-white/90 backdrop-blur-sm rounded-full text-healthcare-700">
-                        {project.Category}
-                      </span>
-                    )}
-                  </div>
+                <Link
+                  href={`/portfolio/${generateSlug(project['Project Title'])}`}
+                  className="group block h-full"
+                >
+                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-neutral-100 card-hover flex flex-col h-full">
+                    {/* Image */}
+                    <div className="relative aspect-[16/10] overflow-hidden flex-shrink-0">
+                      {project.Images?.[0]?.url ? (
+                        <Image
+                          src={project.Images[0].url}
+                          alt={project['Project Title']}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          sizes="(max-width: 768px) 85vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-healthcare-100 to-healthcare-200" />
+                      )}
+                      {project.Category && (
+                        <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium bg-white/90 backdrop-blur-sm rounded-full text-healthcare-700">
+                          {project.Category}
+                        </span>
+                      )}
+                    </div>
 
-                  {/* Content - Equal height using flex */}
-                  <div className="p-6 flex flex-col flex-1">
-                    <h3 className="font-serif text-xl font-semibold text-neutral-900 group-hover:text-healthcare-600 transition-colors line-clamp-2">
-                      {project['Project Title']}
-                    </h3>
-                    
-                    <p className="mt-3 text-neutral-600 line-clamp-3 flex-1">
-                      {project['Short Description']}
-                    </p>
-
-                    {project['Client / Role'] && (
-                      <p className="mt-4 text-sm text-neutral-500 pt-4 border-t border-neutral-100">
-                        {project['Client / Role']}
+                    {/* Content */}
+                    <div className="p-6 flex flex-col flex-1">
+                      <h3 className="font-serif text-xl font-semibold text-neutral-900 group-hover:text-healthcare-600 transition-colors line-clamp-2">
+                        {project['Project Title']}
+                      </h3>
+                      
+                      <p className="mt-3 text-neutral-600 line-clamp-3 flex-1">
+                        {project['Short Description']}
                       </p>
-                    )}
+
+                      {project['Client / Role'] && (
+                        <p className="mt-4 text-sm text-neutral-500 pt-4 border-t border-neutral-100">
+                          {project['Client / Role']}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </motion.article>
-          ))}
+                </Link>
+              </motion.article>
+            ))}
+          </div>
         </div>
 
         <motion.div

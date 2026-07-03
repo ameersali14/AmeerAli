@@ -27,6 +27,7 @@ const navigation = [
   },
   { name: 'Resources', href: '/resources' },
   { name: 'Videos', href: '/videos' },
+  { name: 'AI Timeline', href: '/timeline' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ];

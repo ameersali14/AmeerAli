@@ -21,6 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
 
   return {
+    metadataBase: new URL('http://localhost:3000'), // For development
     title: {
       default: settings?.Name || 'Dr. Sarah Chen | AI Healthcare Expert',
       template: `%s | ${settings?.Name || 'Dr. Sarah Chen'}`,

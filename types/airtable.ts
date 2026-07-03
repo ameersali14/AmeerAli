@@ -142,3 +142,14 @@ export interface ContactSubmission {
   Status?: string;
   'Submitted At'?: string;
 }
+
+
+export interface TimelineEvent {
+  id: string;
+  Year: string;
+  Title: string;
+  Description: string;
+  Category?: string;
+  Featured?: boolean;
+  'Icon / Image'?: Array<{ url: string }>;
+}

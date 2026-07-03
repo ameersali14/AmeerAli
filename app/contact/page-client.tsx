@@ -61,7 +61,7 @@ export function ContactPageClient({ settings }: ContactPageClientProps) {
             </span>
             <h1 className="heading-xl mt-4">Contact</h1>
             <p className="text-body-lg mt-4 max-w-2xl">
-              Have a question, collaboration idea, or speaking opportunity? I would love to hear from you.
+            I work with leaders and organizations seeking to move beyond AI experimentation and into real operational transformation through workflow redesign and applied AI systems.
             </p>
           </motion.div>
         </div>
@@ -169,11 +169,11 @@ export function ContactPageClient({ settings }: ContactPageClientProps) {
                 </p>
                 <div className="space-y-4">
                   <a
-                    href="mailto:contact@example.com"
+                    href="mailto:ameerproduct@gmail.com"
                     className="flex items-center gap-3 text-white hover:text-healthcare-200 transition-colors"
                   >
                     <Mail className="w-5 h-5" />
-                    <span>contact@example.com</span>
+                    <span>ameerproduct@gmail.com</span>
                   </a>
                   {settings?.['Bio LinkedIn URL'] && (
                     <a

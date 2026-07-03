@@ -25,6 +25,8 @@ async function fetchFromAirtable<T>(
     headers: {
       Authorization: `Bearer ${AIRTABLE_API_KEY}`,
     },
+    cache: 'no-store',      // ← No caching
+    next: { revalidate: 0 } // ← Force fresh data
   });
 
   if (!response.ok) {
@@ -132,4 +134,5 @@ export const TABLES = {
   CURATED_READINGS: 'Curated Readings',
   QUOTES: 'Quotes',
   CONTACT_SUBMISSIONS: 'Contact Submissions',   // ← Add this
+  AI_TIMELINE: 'AI Timeline',
 } as const;

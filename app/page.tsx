@@ -5,6 +5,8 @@ import { InsightsSection } from '@/components/sections/InsightsSection';
 import { LearningsSection } from '@/components/sections/LearningsSection';
 import { QuotesSection } from '@/components/sections/QuotesSection';
 import { CTASection } from '@/components/sections/CTASection';
+import { TimelineSection } from '@/components/sections/TimelineSection';
+import { getTimelineEvents } from '@/lib/data';
 import {
   getSettings,
   getPortfolio,
@@ -15,13 +17,14 @@ import {
 } from '@/lib/data';
 
 export default async function Home() {
-  const [settings, portfolio, articles, essays, learnings, quotes] = await Promise.all([
+  const [settings, portfolio, articles, essays, learnings, quotes, timelineEvents] = await Promise.all([
     getSettings(),
     getPortfolio(),
     getArticles(),
     getEssays(),
     getLearnings(),
     getQuotes(),
+    getTimelineEvents(),
   ]);
 
   const featuredPortfolio = portfolio.filter((p) => p.Featured);
@@ -45,6 +48,7 @@ export default async function Home() {
         learnings={featuredLearnings.length > 0 ? featuredLearnings : learnings}
       />
       <QuotesSection quotes={quotes} />
+      <TimelineSection events={timelineEvents} />
       <CTASection settings={settings} />
     </>
   );

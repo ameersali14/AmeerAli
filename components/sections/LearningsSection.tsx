@@ -36,7 +36,8 @@ export function LearningsSection({ learnings }: LearningsSectionProps) {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Horizontal Scroll on Mobile */}
+        <div className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide md:grid md:grid-cols-3 md:gap-6">
           {featuredLearnings.map((learning, index) => (
             <motion.div
               key={learning.id}
@@ -44,37 +45,39 @@ export function LearningsSection({ learnings }: LearningsSectionProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-2xl p-6 border border-neutral-100 shadow-sm"
+              className="flex-shrink-0 w-[88%] md:w-auto snap-start"
             >
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-xl bg-healthcare-50 text-healthcare-600 shrink-0">
-                  <Lightbulb className="w-6 h-6" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-serif text-lg font-semibold text-neutral-900 line-clamp-2">
-                    {learning.Title}
-                  </h3>
-                  {learning.Source && (
-                    <p className="text-sm text-healthcare-600 mt-1">{learning.Source}</p>
-                  )}
-                  <p className="mt-3 text-neutral-600 text-sm line-clamp-3">
-                    {learning['Key Lessons / Summary']}
-                  </p>
-                  <div className="mt-4 flex items-center justify-between">
-                    <span className="text-xs text-neutral-500">
-                      {formatDate(learning['Publish Date'])}
-                    </span>
-                    {learning['White Paper URL'] && (
-                      <a
-                        href={learning['White Paper URL']}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-sm text-healthcare-600 hover:text-healthcare-700 font-medium"
-                      >
-                        Read Paper
-                        <ExternalLink className="w-3 h-3 ml-1" />
-                      </a>
+              <div className="bg-white rounded-2xl p-6 border border-neutral-100 shadow-sm h-full">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 rounded-xl bg-healthcare-50 text-healthcare-600 shrink-0">
+                    <Lightbulb className="w-6 h-6" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-serif text-lg font-semibold text-neutral-900 line-clamp-2">
+                      {learning.Title}
+                    </h3>
+                    {learning.Source && (
+                      <p className="text-sm text-healthcare-600 mt-1">{learning.Source}</p>
                     )}
+                    <p className="mt-3 text-neutral-600 text-sm line-clamp-4">
+                      {learning['Key Lessons / Summary']}
+                    </p>
+                    <div className="mt-4 flex items-center justify-between">
+                      <span className="text-xs text-neutral-500">
+                        {formatDate(learning['Publish Date'])}
+                      </span>
+                      {learning['White Paper URL'] && (
+                        <a
+                          href={learning['White Paper URL']}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center text-sm text-healthcare-600 hover:text-healthcare-700 font-medium"
+                        >
+                          Read Paper
+                          <ExternalLink className="w-3 h-3 ml-1" />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
