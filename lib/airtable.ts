@@ -71,7 +71,7 @@ export async function fetchBySlug<T>(
     
     const response = await fetchFromAirtable<T>(tableName, {
       filterByFormula: formula,
-      maxRecords: 1,
+      maxRecords: '1',
     });
 
     if (response.records.length > 0) {
