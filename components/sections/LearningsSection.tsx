@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Lightbulb, ExternalLink, BookOpen } from 'lucide-react';
+import { Lightbulb, ExternalLink, BookOpen, ArrowRight } from 'lucide-react';
 import { Learning } from '@/types/airtable';
 import { formatDate } from '@/lib/utils';
 import Link from 'next/link';
@@ -18,88 +18,103 @@ export function LearningsSection({ learnings }: LearningsSectionProps) {
   }
 
   return (
-    <section className="section-padding bg-neutral-50">
-      <div className="container-custom">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
-          <span className="text-sm font-medium text-healthcare-600 uppercase tracking-wider">
-            Key Learnings
-          </span>
-          <h2 className="heading-lg mt-3">Insights from Research</h2>
-          <p className="text-body mt-4 max-w-2xl mx-auto">
-            Important lessons and findings from recent research papers and industry developments.
-          </p>
-        </motion.div>
+    <section className="py-20 md:py-32 bg-[#FDFCFA]">
+      <div className="max-w-7xl mx-auto px-5 md:px-8">
+        
+        {/* Header */}
+        <div className="mb-14 md:mb-20 md:flex md:items-end md:justify-between">
+          <div className="max-w-xl">
+            <span className="inline-block text-[11px] font-semibold text-[#0284C7] uppercase tracking-[0.2em] mb-4">
+              Key Learnings
+            </span>
+            <h2 className="text-[1.75rem] leading-[1.12] font-bold text-[#0B1B2B] md:text-[2.25rem] md:leading-[1.1]">
+              Insights from Research
+            </h2>
+            <p className="mt-4 text-[15px] leading-relaxed text-[#64748B] md:text-base md:mt-5">
+              Important lessons and findings from recent research papers and industry developments.
+            </p>
+          </div>
+          
+          <Link 
+            href="/learnings" 
+            className="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-[#0284C7] hover:text-[#0369A1] transition-colors group"
+          >
+            View All Learnings
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
 
-        {/* Horizontal Scroll on Mobile */}
-        <div className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide md:grid md:grid-cols-3 md:gap-6">
+        {/* Cards Grid */}
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
           {featuredLearnings.map((learning, index) => (
-            <motion.div
+            <motion.article
               key={learning.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex-shrink-0 w-[88%] md:w-auto snap-start"
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="group"
             >
-              <div className="bg-white rounded-2xl p-6 border border-neutral-100 shadow-sm h-full">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-healthcare-50 text-healthcare-600 shrink-0">
-                    <Lightbulb className="w-6 h-6" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-serif text-lg font-semibold text-neutral-900 line-clamp-2">
-                      {learning.Title}
-                    </h3>
-                    {learning.Source && (
-                      <p className="text-sm text-healthcare-600 mt-1">{learning.Source}</p>
-                    )}
-                    <p className="mt-3 text-neutral-600 text-sm line-clamp-4">
-                      {learning['Key Lessons / Summary']}
-                    </p>
-                    <div className="mt-4 flex items-center justify-between">
-                      <span className="text-xs text-neutral-500">
-                        {formatDate(learning['Publish Date'])}
-                      </span>
-                      {learning['White Paper URL'] && (
-                        <a
-                          href={learning['White Paper URL']}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center text-sm text-healthcare-600 hover:text-healthcare-700 font-medium"
-                        >
-                          Read Paper
-                          <ExternalLink className="w-3 h-3 ml-1" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
+              <div className="bg-white rounded-2xl p-6 lg:p-8 border border-[#E2E8F0] h-full flex flex-col transition-all duration-300 hover:shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:border-[#CBD5E1]">
+                
+                {/* Icon */}
+                <div className="w-11 h-11 rounded-xl bg-[#E0F2FE] flex items-center justify-center mb-5">
+                  <Lightbulb className="w-5 h-5 text-[#0284C7]" />
+                </div>
+
+                {/* Content */}
+                <h3 className="text-[16px] font-bold text-[#0B1B2B] leading-snug group-hover:text-[#0284C7] transition-colors duration-300 line-clamp-2">
+                  {learning.Title}
+                </h3>
+                
+                {learning.Source && (
+                  <p className="mt-2 text-[12px] font-semibold text-[#0284C7] uppercase tracking-[0.1em]">
+                    {learning.Source}
+                  </p>
+                )}
+                
+                <p className="mt-4 text-[14px] leading-[1.65] text-[#64748B] line-clamp-4 flex-grow">
+                  {learning['Key Lessons / Summary']}
+                </p>
+
+                {/* Footer */}
+                <div className="mt-6 pt-5 border-t border-[#F1F5F9] flex items-center justify-between">
+                  <span className="text-[12px] text-[#94A3B8] font-medium">
+                    {formatDate(learning['Publish Date'])}
+                  </span>
+                  
+                  {learning['White Paper URL'] ? (
+                    <a
+                      href={learning['White Paper URL']}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#0284C7] hover:text-[#0369A1] transition-colors"
+                    >
+                      Read Paper
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#94A3B8]">
+                      <BookOpen className="w-3.5 h-3.5" />
+                      Research
+                    </span>
+                  )}
                 </div>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center mt-10"
-        >
+        {/* Mobile CTA */}
+        <div className="mt-14 md:hidden">
           <Link
             href="/learnings"
-            className="inline-flex items-center text-healthcare-600 hover:text-healthcare-700 font-medium transition-colors"
+            className="flex items-center justify-center gap-2 w-full py-4 rounded-full border border-[#CBD5E1] text-[#475569] hover:bg-white transition-colors text-[14px] font-semibold"
           >
             View All Learnings
-            <BookOpen className="w-4 h-4 ml-2" />
+            <ArrowRight className="w-4 h-4" />
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

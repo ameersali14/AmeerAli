@@ -17,85 +17,115 @@ export function TimelineSection({ events }: TimelineSectionProps) {
   if (displayEvents.length === 0) return null;
 
   return (
-    <section className="section-padding bg-white">
-      <div className="container-custom">
-        <div className="text-center mb-12">
-          <span className="text-sm font-medium text-healthcare-600 uppercase tracking-wider">
-            AI Evolution
-          </span>
-          <h2 className="heading-lg mt-3">Timeline of Key Milestones</h2>
-          <p className="text-body mt-4 max-w-2xl mx-auto">
-            Major developments in AI and Healthcare since 2022
-          </p>
+    <section className="py-20 md:py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-5 md:px-8">
+        
+        {/* Header */}
+        <div className="mb-16 md:mb-24 md:flex md:items-end md:justify-between">
+          <div className="max-w-xl">
+            <span className="inline-block text-[11px] font-semibold text-[#0284C7] uppercase tracking-[0.2em] mb-4">
+              AI Evolution
+            </span>
+            <h2 className="text-[1.75rem] leading-[1.12] font-bold text-[#0B1B2B] md:text-[2.25rem] md:leading-[1.1]">
+              Timeline of Key Milestones
+            </h2>
+            <p className="mt-4 text-[15px] leading-relaxed text-[#64748B] md:text-base md:mt-5">
+              Major developments in AI and Healthcare since 2022
+            </p>
+          </div>
         </div>
 
-        {/* Horizontal Scrollable Timeline */}
-        <div className="relative">
-          <div className="flex gap-8 overflow-x-auto pb-12 snap-x snap-mandatory scrollbar-hide md:hidden">
+        {/* Desktop Timeline — Vertical with spine */}
+        <div className="hidden md:block relative">
+          {/* Central spine */}
+          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-[#E2E8F0] -translate-x-1/2" />
+          
+          <div className="space-y-0">
+            {displayEvents.map((event, index) => {
+              const isLeft = index % 2 === 0;
+              
+              return (
+                <motion.div
+                  key={event.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                  className={`relative flex items-start ${isLeft ? 'flex-row' : 'flex-row-reverse'} mb-16 last:mb-0`}
+                >
+                  {/* Content side */}
+                  <div className={`w-1/2 ${isLeft ? 'pr-12 text-right' : 'pl-12 text-left'}`}>
+                    <div className={`inline-block text-left ${isLeft ? 'text-right' : 'text-left'}`}>
+                      <span className="text-[13px] font-semibold text-[#0284C7] uppercase tracking-[0.1em]">
+                        {event.Category}
+                      </span>
+                      <h3 className="mt-2 text-[18px] font-bold text-[#0B1B2B] leading-snug">
+                        {event.Title}
+                      </h3>
+                      <p className="mt-3 text-[14px] leading-[1.7] text-[#64748B] max-w-md">
+                        {event.Description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Center node */}
+                  <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
+                    <div className="w-3 h-3 rounded-full bg-[#0284C7] ring-4 ring-white" />
+                  </div>
+
+                  {/* Year side */}
+                  <div className={`w-1/2 ${isLeft ? 'pl-12' : 'pr-12'}`}>
+                    <span className={`text-[3rem] font-bold text-[#F1F5F9] leading-none tabular-nums ${isLeft ? 'block' : 'block text-right'}`}>
+                      {event.Year}
+                    </span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Mobile Timeline — Vertical stack with left spine */}
+        <div className="md:hidden relative pl-8">
+          {/* Spine */}
+          <div className="absolute left-3 top-0 bottom-0 w-px bg-[#E2E8F0]" />
+          
+          <div className="space-y-10">
             {displayEvents.map((event, index) => (
               <motion.div
                 key={event.id}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="flex-shrink-0 w-80 snap-center group"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                className="relative"
               >
-                <div className="relative bg-white rounded-3xl p-8 border border-neutral-100 shadow-sm transition-all duration-300 group-hover:scale-105">
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-healthcare-600 mb-2 tabular-nums">
-                      {event.Year}
-                    </div>
-                    {event.Category && (
-                      <span className="inline-block px-4 py-1 text-xs font-medium bg-healthcare-100 text-healthcare-700 rounded-full mb-4">
-                        {event.Category}
-                      </span>
-                    )}
-                    <h3 className="font-serif text-xl font-semibold text-neutral-900 mb-3">
-                      {event.Title}
-                    </h3>
-                    <p className="text-neutral-600 text-sm leading-relaxed line-clamp-4">
-                      {event.Description}
-                    </p>
-                  </div>
-                </div>
+                {/* Node */}
+                <div className="absolute -left-5 top-1 w-2.5 h-2.5 rounded-full bg-[#0284C7] ring-3 ring-white" />
+                
+                {/* Year */}
+                <span className="text-[11px] font-semibold text-[#0284C7] uppercase tracking-[0.1em]">
+                  {event.Year}
+                </span>
+                
+                {/* Category */}
+                {event.Category && (
+                  <span className="ml-2 text-[11px] font-medium text-[#94A3B8]">
+                    {event.Category}
+                  </span>
+                )}
+                
+                {/* Title */}
+                <h3 className="mt-2 text-[16px] font-bold text-[#0B1B2B] leading-snug">
+                  {event.Title}
+                </h3>
+                
+                {/* Description */}
+                <p className="mt-2 text-[14px] leading-[1.65] text-[#64748B]">
+                  {event.Description}
+                </p>
               </motion.div>
             ))}
-          </div>
-
-          {/* Desktop Grid */}
-          <div className="hidden md:block">
-            <div className="relative border-l-2 border-healthcare-200 pl-8 max-w-3xl mx-auto">
-              {displayEvents.map((event, index) => (
-                <motion.div
-                  key={event.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="mb-12 relative"
-                >
-                  <div className="flex items-center gap-4 mb-3">
-                    <span className="text-2xl font-semibold text-healthcare-600 tabular-nums">
-                      {event.Year}
-                    </span>
-                    {event.Category && (
-                      <span className="px-3 py-1 text-xs font-medium bg-healthcare-100 text-healthcare-700 rounded-full">
-                        {event.Category}
-                      </span>
-                    )}
-                  </div>
-
-                  <h3 className="text-xl font-semibold text-neutral-900 mb-2">
-                    {event.Title}
-                  </h3>
-
-                  <p className="text-neutral-600 leading-relaxed">
-                    {event.Description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
           </div>
         </div>
       </div>

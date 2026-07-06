@@ -5,7 +5,7 @@ import { getVideos } from '@/lib/data';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Videos',
+    title: 'Videos — Talks & Presentations',
     description: 'Watch talks, presentations, and educational content on AI healthcare and digital health innovation.',
   };
 }
@@ -36,35 +36,42 @@ export default async function VideosPage() {
   );
 
   return (
-    <div className="min-h-screen">
-      <section className="bg-gradient-to-br from-healthcare-50 via-white to-healthcare-100 py-16 md:py-24">
-        <div className="container-custom">
-          <span className="text-sm font-medium text-healthcare-600 uppercase tracking-wider">
+    <div className="min-h-screen bg-[#FDFCFA]">
+      {/* Page Header */}
+      <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-white">
+        <div className="max-w-7xl mx-auto px-5 md:px-8">
+          <span className="inline-block text-[11px] font-semibold text-[#0284C7] uppercase tracking-[0.2em] mb-4">
             Multimedia
           </span>
-          <h1 className="heading-xl mt-4">Videos</h1>
-          <p className="text-body-lg mt-4 max-w-2xl">
+          <h1 className="text-[2.5rem] leading-[1.1] font-bold text-[#0B1B2B] md:text-[3.5rem]">
+            Videos
+          </h1>
+          <p className="mt-5 text-[15px] leading-relaxed text-[#64748B] max-w-xl md:text-base">
             Talks, presentations, interviews, and educational content on AI healthcare
             and digital health innovation.
           </p>
         </div>
       </section>
 
-      <section className="section-padding bg-white">
-        <div className="container-custom">
+      {/* Video Categories */}
+      <section className="py-12 md:py-20">
+        <div className="max-w-7xl mx-auto px-5 md:px-8">
           {videos.length === 0 ? (
-            <div className="text-center py-16">
-              <VideoIcon className="w-16 h-16 text-neutral-300 mx-auto mb-4" />
-              <p className="text-neutral-500">No videos found.</p>
+            <div className="text-center py-24">
+              <VideoIcon className="w-16 h-16 text-[#E2E8F0] mx-auto mb-4" />
+              <p className="text-[15px] text-[#94A3B8]">No videos found.</p>
             </div>
           ) : (
-            <div className="space-y-12">
+            <div className="space-y-16">
               {Object.entries(categorizedVideos).map(([category, categoryVideos]) => (
                 <div key={category}>
-                  <h2 className="font-serif text-2xl font-semibold text-neutral-900 mb-6">
+                  {/* Category Header */}
+                  <h2 className="text-[11px] font-semibold text-[#0284C7] uppercase tracking-[0.2em] mb-8">
                     {category}
                   </h2>
-                  <div className="grid md:grid-cols-2 gap-6">
+                  
+                  {/* Video Grid */}
+                  <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
                     {categoryVideos.map((video) => {
                       const embedUrl = video['Video URL']
                         ? getYouTubeEmbedUrl(video['Video URL'])
@@ -73,10 +80,11 @@ export default async function VideosPage() {
                       return (
                         <article
                           key={video.id}
-                          className="bg-neutral-50 rounded-2xl overflow-hidden border border-neutral-100"
+                          className="bg-white rounded-2xl overflow-hidden border border-[#E2E8F0] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] hover:border-[#CBD5E1]"
                         >
+                          {/* Video Player / Thumbnail */}
                           {embedUrl ? (
-                            <div className="relative aspect-video">
+                            <div className="relative aspect-video bg-[#0B1B2B]">
                               <iframe
                                 src={embedUrl}
                                 title={video.Title}
@@ -96,30 +104,32 @@ export default async function VideosPage() {
                                 src={video.Thumbnail[0].url}
                                 alt={video.Title}
                                 fill
-                                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                                 sizes="(max-width: 768px) 100vw, 50vw"
                               />
-                              <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/40 transition-colors">
-                                <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
-                                  <Play className="w-8 h-8 text-healthcare-600 ml-1" />
+                              <div className="absolute inset-0 bg-[#0B1B2B]/30 flex items-center justify-center group-hover:bg-[#0B1B2B]/40 transition-colors duration-300">
+                                <div className="w-14 h-14 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg">
+                                  <Play className="w-6 h-6 text-[#0284C7] ml-0.5" />
                                 </div>
                               </div>
                             </a>
                           ) : (
-                            <div className="aspect-video bg-neutral-200 flex items-center justify-center">
-                              <a
-                                href={video['Video URL']}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-16 h-16 bg-white rounded-full flex items-center justify-center hover:bg-neutral-100 transition-colors"
-                              >
-                                <Play className="w-8 h-8 text-healthcare-600 ml-1" />
-                              </a>
-                            </div>
+                            <a
+                              href={video['Video URL']}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="aspect-video bg-[#F1F5F9] flex items-center justify-center group"
+                            >
+                              <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+                                <Play className="w-6 h-6 text-[#0284C7] ml-0.5" />
+                              </div>
+                            </a>
                           )}
-                          <div className="p-5">
-                            <div className="flex items-center gap-2 text-sm text-neutral-500 mb-2">
-                              <Calendar className="w-4 h-4" />
+
+                          {/* Content */}
+                          <div className="p-5 lg:p-6">
+                            <div className="flex items-center gap-2 text-[11px] text-[#94A3B8] font-medium uppercase tracking-wider mb-2.5">
+                              <Calendar className="w-3 h-3" />
                               <span>
                                 {video['Publish Date']
                                   ? new Date(video['Publish Date']).toLocaleDateString('en-US', {
@@ -129,11 +139,13 @@ export default async function VideosPage() {
                                   : ''}
                               </span>
                             </div>
-                            <h3 className="font-serif text-lg font-semibold text-neutral-900">
+                            
+                            <h3 className="text-[16px] font-bold text-[#0B1B2B] leading-snug line-clamp-2">
                               {video.Title}
                             </h3>
+                            
                             {video.Description && (
-                              <p className="mt-2 text-neutral-600 text-sm line-clamp-2">
+                              <p className="mt-2 text-[13px] leading-[1.6] text-[#64748B] line-clamp-2">
                                 {video.Description}
                               </p>
                             )}
