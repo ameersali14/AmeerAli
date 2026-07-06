@@ -5,6 +5,19 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft, Calendar, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { getEssays, getEssayBySlug, getSettings } from '@/lib/data';
 
+// Helper: convert plain text with newlines to HTML paragraphs
+function formatContent(text: string): string {
+  if (!text) return '';
+  
+  // Split by double newlines (paragraph breaks) or single newlines
+  const paragraphs = text
+    .split(/\n\s*\n|\n/)
+    .map(p => p.trim())
+    .filter(p => p.length > 0);
+  
+  return paragraphs.map(p => `<p>${p.replace(/\n/g, '<br/>')}</p>`).join('');
+}
+
 interface EssayDetailPageProps {
   params: Promise<{ slug: string }>;
 }
@@ -53,6 +66,8 @@ export default async function EssayDetailPage({ params }: EssayDetailPageProps) 
     .filter((e) => e.id !== essay.id)
     .slice(0, 2);
 
+  const formattedContent = formatContent(essay['Full Content'] || essay.Excerpt);
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -86,10 +101,9 @@ export default async function EssayDetailPage({ params }: EssayDetailPageProps) 
           </Link>
         </div>
 
-        {/* Essay Header — Left aligned, editorial */}
+        {/* Essay Header */}
         <header className="pt-24 pb-16 md:pt-32 md:pb-20 bg-white">
           <div className="max-w-3xl mx-auto px-5 md:px-8">
-            {/* Mobile back link */}
             <Link
               href="/essays"
               className="inline-flex items-center gap-2 text-[13px] font-medium text-[#64748B] hover:text-[#0284C7] transition-colors mb-6 md:hidden"
@@ -98,7 +112,6 @@ export default async function EssayDetailPage({ params }: EssayDetailPageProps) 
               Back
             </Link>
 
-            {/* Meta — left aligned */}
             <div className="flex items-center gap-3 text-[12px] text-[#94A3B8] font-medium uppercase tracking-wider mb-5">
               <span className="flex items-center gap-1.5">
                 <Calendar className="w-3.5 h-3.5" />
@@ -112,17 +125,14 @@ export default async function EssayDetailPage({ params }: EssayDetailPageProps) 
               </span>
             </div>
 
-            {/* Title — Left aligned, bold */}
             <h1 className="text-[2rem] leading-[1.15] font-bold text-[#0B1B2B] md:text-[2.75rem] md:leading-[1.1]">
               {essay.Title}
             </h1>
 
-            {/* Excerpt — Left aligned, not italic */}
             <p className="mt-5 text-[16px] leading-[1.7] text-[#64748B] md:text-[17px] max-w-2xl">
               {essay.Excerpt}
             </p>
 
-            {/* Author — Left aligned */}
             {settings?.Name && (
               <div className="mt-8 pt-8 border-t border-[#E2E8F0] flex items-center gap-3">
                 {settings?.['Bio Photo']?.[0]?.url && (
@@ -147,11 +157,11 @@ export default async function EssayDetailPage({ params }: EssayDetailPageProps) 
           </div>
         </header>
 
-        {/* Cover Image — Left aligned container, not centered */}
+        {/* Cover Image — Full width, edge to edge */}
         {essay['Cover Image']?.[0]?.url && (
           <div className="bg-white">
-            <div className="max-w-7xl mx-auto px-5 md:px-8 pb-12 md:pb-16">
-              <div className="relative aspect-[21/9] rounded-2xl overflow-hidden bg-[#F1F5F9] max-w-4xl">
+            <div className="max-w-5xl mx-auto px-5 md:px-8 pb-12 md:pb-16">
+              <div className="relative aspect-[21/9] w-full rounded-2xl overflow-hidden bg-[#F1F5F9]">
                 <Image
                   src={essay['Cover Image'][0].url}
                   alt={essay.Title}
@@ -165,25 +175,17 @@ export default async function EssayDetailPage({ params }: EssayDetailPageProps) 
           </div>
         )}
 
-        {/* Essay Content — Left aligned, reading column */}
+        {/* Essay Content — Formatted with paragraphs */}
         <div className="py-12 md:py-20">
           <div className="max-w-3xl mx-auto px-5 md:px-8">
-            <div className="prose prose-lg max-w-none">
-              {essay['Full Content'] ? (
-                <div 
-                  className="text-[16px] leading-[1.8] text-[#475569] md:text-[17px] essay-content"
-                  dangerouslySetInnerHTML={{ __html: essay['Full Content'] }}
-                />
-              ) : (
-                <p className="text-[16px] leading-[1.8] text-[#475569] md:text-[17px]">
-                  {essay.Excerpt}
-                </p>
-              )}
-            </div>
+            <div 
+              className="prose prose-lg max-w-none essay-body"
+              dangerouslySetInnerHTML={{ __html: formattedContent }}
+            />
           </div>
         </div>
 
-        {/* Related Essays — Left aligned header, asymmetric grid */}
+        {/* Related Essays */}
         {relatedEssays.length > 0 && (
           <section className="py-16 md:py-24 bg-white border-t border-[#E2E8F0]">
             <div className="max-w-7xl mx-auto px-5 md:px-8">
@@ -230,7 +232,7 @@ export default async function EssayDetailPage({ params }: EssayDetailPageProps) 
           </section>
         )}
 
-        {/* Page CTA — Left aligned content */}
+        {/* Page CTA */}
         <section className="py-20 md:py-28 bg-[#0B1B2B] relative overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[250px] bg-[#0284C7]/8 rounded-full blur-[120px] pointer-events-none" />
           
