@@ -10,6 +10,7 @@ import {
   CuratedReading,
   Quote,
   TimelineEvent,
+  AIJob
 } from '@/types/airtable';
 import {
   fetchAllRecords,
@@ -196,3 +197,30 @@ export async function getTimelineEvents(): Promise<TimelineEvent[]> {
 export async function getFeaturedTimelineEvents(): Promise<TimelineEvent[]> {
   return fetchFeatured<TimelineEvent>(TABLES.AI_TIMELINE);
 }
+
+
+export async function getAIJobs(): Promise<AIJob[]> {
+  return fetchAllRecords<AIJob>(TABLES.AI_JOBS, true); // true = Jobs base
+}
+
+export async function getFeaturedAIJobs(): Promise<AIJob[]> {
+  return fetchFeatured<AIJob>(TABLES.AI_JOBS, true);
+}
+
+export async function getAIJobBySlug(slug: string): Promise<AIJob | null> {
+  const allJobs = await getAIJobs();
+  
+  const job = allJobs.find((j) => {
+    const generatedSlug = generateSlug(j['Job Title']);
+    return generatedSlug === slug;
+  });
+
+  return job || null;
+}
+
+
+export async function getAIJobById(id: string): Promise<AIJob | null> {
+  const allJobs = await getAIJobs();
+  return allJobs.find((j) => j.id === id) || null;
+}
+

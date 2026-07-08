@@ -6,7 +6,8 @@ import { LearningsSection } from '@/components/sections/LearningsSection';
 import { QuotesSection } from '@/components/sections/QuotesSection';
 import { CTASection } from '@/components/sections/CTASection';
 import { TimelineSection } from '@/components/sections/TimelineSection';
-import { getTimelineEvents } from '@/lib/data';
+import { FeaturedJobsSection } from '@/components/sections/FeaturedJobsSection';
+
 import {
   getSettings,
   getPortfolio,
@@ -14,10 +15,12 @@ import {
   getEssays,
   getLearnings,
   getQuotes,
+  getTimelineEvents,
+  getAIJobs,          // ← Make sure this is imported
 } from '@/lib/data';
 
 export default async function Home() {
-  const [settings, portfolio, articles, essays, learnings, quotes, timelineEvents] = await Promise.all([
+  const [settings, portfolio, articles, essays, learnings, quotes, timelineEvents, jobs] = await Promise.all([
     getSettings(),
     getPortfolio(),
     getArticles(),
@@ -25,6 +28,7 @@ export default async function Home() {
     getLearnings(),
     getQuotes(),
     getTimelineEvents(),
+    getAIJobs(),           // ← This was missing
   ]);
 
   const featuredPortfolio = portfolio.filter((p) => p.Featured);
@@ -49,6 +53,7 @@ export default async function Home() {
       />
       <QuotesSection quotes={quotes} />
       <TimelineSection events={timelineEvents} />
+      <FeaturedJobsSection jobs={jobs} />
       <CTASection settings={settings} />
     </>
   );
