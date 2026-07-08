@@ -153,3 +153,34 @@ export interface TimelineEvent {
   Featured?: boolean;
   'Icon / Image'?: Array<{ url: string }>;
 }
+
+
+export interface AIJob {
+  id: string;
+  'Job Title': string;
+  Category?: string[];
+  Company?: string;
+  'Company Description'?: string;
+  'Company Strategy Insights'?: string;
+  'Date Added'?: string;
+  'Employment Type'?: string;
+  'Full Job Description'?: string;
+  'Job Link'?: string;
+  'Key Capabilities'?: string;
+  Location?: string;
+  'Posted Date / Time'?: string;
+  'Salary Range'?: string;
+  'Score (1-10)'?: string;
+  Status?: string;
+  'Suggested Interview Questions'?: string;
+  'Short Description'?: string;
+}
+
+export interface Lead {
+  id: string;
+  Name: string;
+  Email: string;
+  Role?: string;
+  IsSubscribed?: boolean;
+  'Verification Code'?: string;
+}
