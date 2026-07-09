@@ -38,7 +38,7 @@ export function FeaturedJobsSection({ jobs }: FeaturedJobsSectionProps) {
             href="/ai-jobs" 
             className="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-[#0284C7] hover:text-[#0369A1] transition-colors group"
           >
-            View all opportunities
+            View all opportunities and AI Insights
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
@@ -130,7 +130,7 @@ export function FeaturedJobsSection({ jobs }: FeaturedJobsSectionProps) {
             className="w-full rounded-full border-[#CBD5E1] text-[#475569] hover:bg-[#F8FAFC] hover:border-[#94A3B8] py-5 text-[14px] font-semibold"
           >
             <Link href="/ai-jobs" className="flex items-center justify-center gap-2">
-              View All AI Jobs
+              View All AI Jobs and AI Insights
               <ArrowRight className="w-4 h-4" />
             </Link>
           </Button>

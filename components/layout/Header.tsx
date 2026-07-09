@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { ChevronDown, Menu, X, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Settings } from '@/types/airtable';
 
@@ -25,6 +25,7 @@ const navigation = [
       { name: 'Learnings', href: '/learnings' },
     ],
   },
+  { name: 'AI Jobs', href: '/ai-jobs' },
   { name: 'Resources', href: '/resources' },
   { name: 'Videos', href: '/videos' },
   { name: 'AI Timeline', href: '/timeline' },
@@ -42,6 +43,7 @@ export function Header({ settings }: HeaderProps) {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 40);
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -51,14 +53,15 @@ export function Header({ settings }: HeaderProps) {
   }, [pathname]);
 
   const isHomePage = pathname === '/';
+  const isLightHeader = isScrolled || !isHomePage;
 
   return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled || !isHomePage
-            ? 'bg-white/90 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.04)]'
-            : 'bg-transparent'
+          isLightHeader
+            ? 'bg-white/95 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.04)]'
+            : 'bg-[#0B1B2B]/80 backdrop-blur-md md:bg-[#0B1B2B]/80 md:backdrop-blur-md'
         }`}
       >
         <nav className="max-w-7xl mx-auto px-5 md:px-8">
@@ -67,7 +70,7 @@ export function Header({ settings }: HeaderProps) {
             {/* Logo */}
             <Link href="/" className="relative z-10">
               <span className={`text-[1.25rem] font-bold tracking-tight transition-colors duration-300 ${
-                isScrolled || !isHomePage ? 'text-[#0B1B2B]' : 'text-white'
+                isLightHeader ? 'text-[#0B1B2B]' : 'text-white'
               }`}>
                 {settings?.Name || 'Ameer Ali'}
               </span>
@@ -87,9 +90,9 @@ export function Header({ settings }: HeaderProps) {
                       className={`flex items-center gap-1 px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 ${
                         item.children.some((child) => pathname === child.href)
                           ? 'text-[#0284C7]'
-                          : isScrolled || !isHomePage
+                          : isLightHeader
                             ? 'text-[#475569] hover:text-[#0B1B2B] hover:bg-[#F8FAFC]'
-                            : 'text-white/80 hover:text-white hover:bg-white/10'
+                            : 'text-white/90 hover:text-white hover:bg-white/10'
                       }`}
                     >
                       {item.name}
@@ -103,9 +106,9 @@ export function Header({ settings }: HeaderProps) {
                       className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 ${
                         pathname === item.href
                           ? 'text-[#0284C7]'
-                          : isScrolled || !isHomePage
+                          : isLightHeader
                             ? 'text-[#475569] hover:text-[#0B1B2B] hover:bg-[#F8FAFC]'
-                            : 'text-white/80 hover:text-white hover:bg-white/10'
+                            : 'text-white/90 hover:text-white hover:bg-white/10'
                       }`}
                     >
                       {item.name}
@@ -164,7 +167,7 @@ export function Header({ settings }: HeaderProps) {
               className={`lg:hidden relative z-10 w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 ${
                 mobileMenuOpen 
                   ? 'bg-[#0B1B2B] text-white' 
-                  : isScrolled || !isHomePage
+                  : isLightHeader
                     ? 'text-[#0B1B2B] hover:bg-[#F8FAFC]'
                     : 'text-white hover:bg-white/10'
               }`}
@@ -267,12 +270,15 @@ export function Header({ settings }: HeaderProps) {
                       ) : (
                         <Link
                           href={item.href}
-                          className={`block py-4 text-[15px] font-medium border-b border-[#F1F5F9] transition-colors ${
+                          className={`flex items-center gap-2 py-4 text-[15px] font-medium border-b border-[#F1F5F9] transition-colors ${
                             pathname === item.href
                               ? 'text-[#0284C7]'
                               : 'text-[#0B1B2B]'
                           }`}
                         >
+                          {item.name === 'AI Jobs' && (
+                            <Briefcase className="w-4 h-4" />
+                          )}
                           {item.name}
                         </Link>
                       )}
