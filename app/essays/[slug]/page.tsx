@@ -4,19 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, Calendar, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { getEssays, getEssayBySlug, getSettings } from '@/lib/data';
-
-// Helper: convert plain text with newlines to HTML paragraphs
-function formatContent(text: string): string {
-  if (!text) return '';
-  
-  // Split by double newlines (paragraph breaks) or single newlines
-  const paragraphs = text
-    .split(/\n\s*\n|\n/)
-    .map(p => p.trim())
-    .filter(p => p.length > 0);
-  
-  return paragraphs.map(p => `<p>${p.replace(/\n/g, '<br/>')}</p>`).join('');
-}
+import { MarkdownContent } from './markdown-content';
 
 interface EssayDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -65,8 +53,6 @@ export default async function EssayDetailPage({ params }: EssayDetailPageProps) 
   const relatedEssays = allEssays
     .filter((e) => e.id !== essay.id)
     .slice(0, 2);
-
-  const formattedContent = formatContent(essay['Full Content'] || essay.Excerpt);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -157,7 +143,7 @@ export default async function EssayDetailPage({ params }: EssayDetailPageProps) 
           </div>
         </header>
 
-        {/* Cover Image — Full width, edge to edge */}
+        {/* Cover Image */}
         {essay['Cover Image']?.[0]?.url && (
           <div className="bg-white">
             <div className="max-w-5xl mx-auto px-5 md:px-8 pb-12 md:pb-16">
@@ -175,13 +161,10 @@ export default async function EssayDetailPage({ params }: EssayDetailPageProps) 
           </div>
         )}
 
-        {/* Essay Content — Formatted with paragraphs */}
+        {/* Essay Content — ReactMarkdown via Client Component */}
         <div className="py-12 md:py-20">
           <div className="max-w-3xl mx-auto px-5 md:px-8">
-            <div 
-              className="prose prose-lg max-w-none essay-body"
-              dangerouslySetInnerHTML={{ __html: formattedContent }}
-            />
+            <MarkdownContent content={essay['Full Content'] || essay.Excerpt} />
           </div>
         </div>
 
