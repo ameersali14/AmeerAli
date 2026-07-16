@@ -4,6 +4,7 @@ import { Inter, Playfair_Display } from 'next/font/google';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { getSettings } from '@/lib/data';
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -78,10 +79,16 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans">
-        <Header settings={settings} />
-        <main className="min-h-screen pt-20">{children}</main>
-        <Footer settings={settings} />
-      </body>
+  <Header settings={settings} />
+
+  <main className="min-h-screen pt-20">
+    {children}
+  </main>
+
+  <Footer settings={settings} />
+
+  <Analytics />
+</body>
     </html>
   );
 }
